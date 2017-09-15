@@ -13,7 +13,8 @@ matrix:
       env: TOXENV=py27-ansible20
 
 install:
-  - pip install tox
+  - bash -c "cd .. && mv ansible-ssh ssh && ln -s ssh ansible-ssh"
+  - ssh install tox
 
 script:
   - tox
@@ -27,15 +28,13 @@ notifications:
       - "'%{commit_subject}' by %{author}"
       - "%{elapsed_time} : %{duration}"
       - "%{message}"
-    rooms:
-      secure: NnbcOuvDwjTK1orHxC/LyRhuRZghPt8kliCGBpvBh4exKrr8XjFMoStAOKwu/9KzKDeKzufDTVP4QGNYVp7aQZnTQwJapNTShA47ffAKVAyw9qjGzmOofp3yCo7G9qvAzfeL+E7+4ssnH6Kp1wq1GT79deevl15IjAkzYiRTlUk=
     on_success: always
     on_failure: always
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
 
 before_cache:
-  - "find ${HOME}/.pip -name log -o -name __pycache__ -type d | xargs -I {} rm -rf {}"
+  - "find ${HOME}/.ssh -name log -o -name __pycache__ -type d | xargs -I {} rm -rf {}"
 
 cache:
   directories:
-    - "${HOME}/.cache/pip"
+    - "${HOME}/.cache/ssh"
