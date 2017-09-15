@@ -14,7 +14,7 @@ matrix:
 
 install:
   - bash -c "cd .. && mv ansible-ssh ssh && ln -s ssh ansible-ssh"
-  - ssh install tox
+  - pip install tox
 
 script:
   - tox
